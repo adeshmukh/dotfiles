@@ -1,0 +1,31 @@
+alias ls='ls -CF'
+alias ll='ls -l'
+alias lla='ls -Al'
+alias rm='rm -i'
+alias lessn='less -N'
+
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+# List symlinks
+function lll() {
+  local dir="."
+  if [ $# -gt 0 ]; then dir=$1; fi
+  find $dir -type l -maxdepth 1
+}
+
+# find -type f
+function findf() {
+  if [ $# -lt 1 ]; then echo 'Need arguments, found none' > 2 
+  else find $@ -type f
+  fi
+}
+
+# find -type d
+function findd() {
+  if [ $# -lt 1 ]; then echo 'Need arguments, found none' > 2 
+  else find $@ -type d
+  fi
+}
+

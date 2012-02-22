@@ -1,0 +1,3 @@
+alias apachestart='sudo /opt/local/apache2/bin/apachectl start'
+alias apacherestart='sudo /opt/local/apache2/bin/apachectl restart'
+alias apachestop='sudo /opt/local/apache2/bin/apachectl stop'
