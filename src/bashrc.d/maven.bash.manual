@@ -1,0 +1,2 @@
+export MAVEN_HOME=$HOME/usr/local/apache-maven-3
+export PATH=$MAVEN_HOME/bin:$PATH
