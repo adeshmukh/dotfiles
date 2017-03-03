@@ -1,0 +1,12 @@
+[alias]
+	st = status
+	co = checkout
+	ci = commit
+	br = branch
+	bls = branch list
+	pom = pull origin master
+	syncrebase = !'git com && git pom && git co - && git rebase master'
+	unstage = reset HEAD --
+	last = log -1 HEAD
+	lg = log --oneline
+	com = checkout master
