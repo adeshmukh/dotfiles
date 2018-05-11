@@ -1,12 +1,39 @@
 [alias]
-	st = status
-	co = checkout
-	ci = commit
-	br = branch
-	bls = branch --list
-	pom = pull origin master
-	syncrebase = !'git com && git pom && git co - && git rebase master'
-	unstage = reset HEAD --
-	last = log -1 HEAD
-	lg = log --oneline
-	com = checkout master
+    bls = branch --list
+    br = branch
+    ci = commit
+    cia = commit --amend
+    co = checkout
+    com = checkout master
+    df = diff
+    df1 = diff HEAD~1
+    dfm = diff master
+    dfs = diff --stat
+    dfsg = diff --staged
+    dfsm = diff --stat master
+    dfu = diff upstream/master
+    copr = "!copr() { [ ${#} -ne 2 ] && echo 'Sample usage: git copr upstream 121' && return; rem=${1}; pr=${2}; git fetch ${rem} pull/${pr}/head:pull/${pr}; git co pull/${pr}; }; copr"
+    last = log -1 HEAD
+    lg = log --oneline
+    lsm = ls-tree -r --name-only master
+    pom = pull origin master
+    popr = "!popr() { [ ${#} -ne 1 ] && echo 'Sample usage: git popr upstream' && return; pr="$(git rev-parse --abbrev-ref HEAD)"; git pull ${1} ${pr}/head; }; popr"
+    pum = pull upstream master
+    pushf = push --force
+    rbm = rebase master
+    rems = remote -v
+    st = status
+    unstage = reset HEAD --
+    axe = branch -d
+    pushforg = push --force origin
+    ciane = commit --amend --no-edit
+[commit]
+    gpgsign = false
+[user]
+    name = Amol Deshmukh
+[credential]
+    helper = cache --timeout=86400
+[color]
+    ui = auto
+[color "diff"]
+    whitespace = red reverse
