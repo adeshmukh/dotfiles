@@ -23,4 +23,4 @@ export CS_HOME="${HOME}/devel/usr/local/cloud-search-tools-v2"
 [ -d "$CS_HOME" ] && export PATH="${CS_HOME}/bin:${PATH}"
 
 # gitignore
-function gitignore() { curl -sLw \"\\\n\" https://www.toptal.com/developers/gitignore/api/\$@ ;}
+function gitignore() { curl -sLw \"\\\n\" https://www.toptal.com/developers/gitignore/api/$@ ;}

@@ -1,3 +1,6 @@
+alias bat='batcat'
+
+
 alias g=git
 alias ga='git add'
 alias gl='git pull'
