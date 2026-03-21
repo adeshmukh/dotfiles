@@ -50,9 +50,10 @@ PS1='%F{yellow}${vcs_info_msg_0_}%f%F{red} %T %f%F{blue} %m %f%F{white} %~ %f%% 
 # Missing paths are silently skipped — no errors if a plugin isn't installed.
 _source_plugin() {
     local name="$1"; shift
-    for path in "$@"; do
-        if [ -f "$path" ]; then
-            source "$path"
+    local p
+    for p in "$@"; do
+        if [ -f "$p" ]; then
+            source "$p"
             return
         fi
     done
