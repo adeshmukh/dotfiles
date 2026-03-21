@@ -20,9 +20,11 @@ install:
 	done
 	@echo "==> Symlinking shellrc.d"
 	@ln -sfnv "$(SRC_DIR)/shellrc.d" "$(HOME)/.shellrc.d"
-	@echo "==> Symlinking claude/settings.json"
+	@echo "==> Symlinking claude/"
 	@mkdir -p "$(HOME)/.claude"
 	@ln -sfv "$(SRC_DIR)/claude/settings.json" "$(HOME)/.claude/settings.json"
+	@ln -sfv "$(SRC_DIR)/claude/statusline-command.sh" "$(HOME)/.claude/statusline-command.sh"
+	@chmod +x "$(SRC_DIR)/claude/statusline-command.sh"
 	@echo ""
 	@echo "Done. Open a new shell or run: source ~/.zshrc"
 
