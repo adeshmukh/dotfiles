@@ -1,0 +1,13 @@
+# Repofile — git-cloned tools and plugins
+# Apply with: repo-bundle packages/Repofile
+#   or:       make repos
+#
+# Format: <remote-url>  <local-dest>  [git-clone-options]
+# Local dest supports ~ expansion.
+
+# asdf version manager
+https://github.com/asdf-vm/asdf.git  ~/.asdf  --depth=1
+
+# zsh plugins
+https://github.com/zsh-users/zsh-autosuggestions  ~/.local/share/zsh/plugins/zsh-autosuggestions  --depth=1
+https://github.com/zsh-users/zsh-syntax-highlighting  ~/.local/share/zsh/plugins/zsh-syntax-highlighting  --depth=1

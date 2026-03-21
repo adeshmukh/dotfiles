@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+# bootstrap — install the platform package manager tool if not already present
+# Usage: packages/bootstrap
+#   or:  make bootstrap
+#
+# Safe to re-run: skips install if the tool is already available.
+
+set -euo pipefail
+
+case "$(uname -s)" in
+  Darwin)
+    if command -v brew &>/dev/null; then
+      echo "==> Homebrew already installed, skipping"
+    else
+      echo "==> Installing Homebrew"
+      /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    fi
+    ;;
+  Linux)
+    if [ -f /etc/debian_version ]; then
+      if command -v apt-bundle &>/dev/null; then
+        echo "==> apt-bundle already installed, skipping"
+      else
+        echo "==> Installing apt-bundle"
+        curl -fsSL https://raw.githubusercontent.com/apt-bundle/apt-bundle/main/install.sh | sudo bash
+      fi
+    elif [ -f /etc/redhat-release ]; then
+      # yum is built into RHEL/CentOS — no additional tool needed
+      if command -v yum &>/dev/null; then
+        echo "==> yum already available, skipping"
+      else
+        echo "ERROR: yum not found on RHEL/CentOS system" >&2
+        exit 1
+      fi
+    else
+      echo "ERROR: Unsupported Linux distro" >&2
+      exit 1
+    fi
+    ;;
+  *)
+    echo "ERROR: Unsupported platform: $(uname -s)" >&2
+    exit 1
+    ;;
+esac

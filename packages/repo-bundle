@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# repo-bundle — clone git repos declared in a Repofile
+# Usage: repo-bundle [--update] [Repofile]
+#
+# Options:
+#   --update   Run `git pull --rebase` on repos that already exist locally
+#
+# Repofile format (one entry per line, comments with #):
+#   <remote-url>  <local-dest>  [git-clone-options]
+
+set -euo pipefail
+
+UPDATE=0
+REPOFILE="Repofile"
+
+for arg in "$@"; do
+  case "$arg" in
+    --update) UPDATE=1 ;;
+    *)        REPOFILE="$arg" ;;
+  esac
+done
+
+if [[ ! -f "$REPOFILE" ]]; then
+  echo "repo-bundle: file not found: $REPOFILE" >&2
+  exit 1
+fi
+
+while IFS= read -r line || [[ -n "$line" ]]; do
+  # skip blank lines and comments
+  [[ "$line" =~ ^[[:space:]]*$ || "$line" =~ ^[[:space:]]*# ]] && continue
+
+  read -r remote local opts <<< "$line"
+  local=$(eval echo "$local")   # expand ~
+
+  if [[ ! -d "$local" ]]; then
+    echo "==> Cloning $remote → $local"
+    # shellcheck disable=SC2086
+    git clone $opts "$remote" "$local"
+  elif [[ "$UPDATE" -eq 1 ]]; then
+    echo "==> Updating $local"
+    git -C "$local" pull --rebase
+  else
+    echo "==> $local already present, skipping (use --update to pull)"
+  fi
+done < "$REPOFILE"

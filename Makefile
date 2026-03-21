@@ -1,9 +1,7 @@
 REPO_DIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 SRC_DIR  := $(REPO_DIR)/src
 
-PLUGINS_DIR := $(HOME)/.local/share/zsh/plugins
-
-.PHONY: help install packages plugins sync claude-skills
+.PHONY: help install bootstrap packages repos sync claude-skills
 .DEFAULT_GOAL := help
 
 ## help: Show this help message
@@ -31,10 +29,14 @@ install:
 	@ln -sfv "$(SRC_DIR)/claude/marketplace.json" "$(HOME)/.claude/marketplace.json"
 	@echo ""
 	@echo "Done. Open a new shell or run: source ~/.zshrc"
-	@echo "Tip: to install system packages for this platform, run: make packages"
+	@echo "Tip: on a new machine, run: make bootstrap && make packages && make repos"
+
+## bootstrap: Install the platform package manager tool (prerequisite for packages)
+bootstrap:
+	@"$(REPO_DIR)/packages/bootstrap"
 
 ## packages: Install system packages for the current platform
-packages:
+packages: bootstrap
 	@case "$$(uname -s)" in \
 	  Darwin) echo "==> Installing Homebrew packages" && brew bundle --file="$(REPO_DIR)/packages/Brewfile" ;; \
 	  Linux)  \
@@ -48,20 +50,9 @@ packages:
 	  *) echo "Unsupported platform: $$(uname -s)"; exit 1 ;; \
 	esac
 
-## plugins: Clone zsh plugins to ~/.local/share/zsh/plugins (fallback if not via packages)
-plugins:
-	@mkdir -p "$(PLUGINS_DIR)"
-	@for plugin in \
-	    "zsh-users/zsh-autosuggestions" \
-	    "zsh-users/zsh-syntax-highlighting"; do \
-	  name=$$(basename $$plugin); \
-	  if [ ! -d "$(PLUGINS_DIR)/$$name" ]; then \
-	    echo "==> Cloning $$plugin"; \
-	    git clone --depth=1 "https://github.com/$$plugin" "$(PLUGINS_DIR)/$$name"; \
-	  else \
-	    echo "==> $$name already present, skipping"; \
-	  fi; \
-	done
+## repos: Clone git-based tools and plugins declared in packages/Repofile
+repos:
+	@"$(REPO_DIR)/packages/repo-bundle" "$(REPO_DIR)/packages/Repofile"
 
 ## claude-skills: Print slash commands to register marketplace and install all skills
 claude-skills:
