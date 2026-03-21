@@ -46,6 +46,7 @@ apt gh
 apt golang-go
 apt jq
 apt nodejs
+apt npm
 apt python3
 apt python3-pip
 apt software-properties-common

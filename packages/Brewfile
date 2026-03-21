@@ -26,6 +26,7 @@ brew "tree"
 
 # Dev tools
 brew "gh"
+brew "playwright"
 brew "python"
 brew "nvm"
 brew "pyenv"

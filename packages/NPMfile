@@ -1,0 +1,6 @@
+# NPMfile — global npm packages
+# Apply with: make npm-globals
+#   or:       cat packages/NPMfile | grep -v '^#' | grep -v '^$' | xargs npm install -g
+
+# Testing
+@playwright/test

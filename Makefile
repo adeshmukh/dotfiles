@@ -1,7 +1,7 @@
 REPO_DIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 SRC_DIR  := $(REPO_DIR)/src
 
-.PHONY: help install bootstrap packages repos sync claude-skills
+.PHONY: help install bootstrap packages repos npm-globals sync claude-skills
 .DEFAULT_GOAL := help
 
 ## help: Show this help message
@@ -29,7 +29,7 @@ install:
 	@ln -sfv "$(SRC_DIR)/claude/marketplace.json" "$(HOME)/.claude/marketplace.json"
 	@echo ""
 	@echo "Done. Open a new shell or run: source ~/.zshrc"
-	@echo "Tip: on a new machine, run: make bootstrap && make packages && make repos"
+	@echo "Tip: on a new machine, run: make bootstrap && make packages && make repos && make npm-globals"
 
 ## bootstrap: Install the platform package manager tool (prerequisite for packages)
 bootstrap:
@@ -49,6 +49,11 @@ packages: bootstrap
 	    fi ;; \
 	  *) echo "Unsupported platform: $$(uname -s)"; exit 1 ;; \
 	esac
+
+## npm-globals: Install global npm packages declared in packages/NPMfile
+npm-globals:
+	@echo "==> Installing global npm packages"
+	@grep -v '^#' "$(REPO_DIR)/packages/NPMfile" | grep -v '^$$' | xargs npm install -g
 
 ## repos: Clone git-based tools and plugins declared in packages/Repofile
 repos:
