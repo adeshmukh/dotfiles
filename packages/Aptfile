@@ -1,20 +1,45 @@
 # Aptfile — Debian/Ubuntu packages
-# Apply with: apt-bundle Aptfile
+# Apply with: apt-bundle packages/Aptfile
 # See: https://apt-bundle.org/aptfile-format.html
 
-# Core tools
-apt git
+# --- Keys and repos (processed before packages) ---
+
+# GitHub CLI
+key https://cli.github.com/packages/githubcli-archive-keyring.gpg
+deb "[arch=amd64] https://cli.github.com/packages stable main"
+
+# Charm (glow, etc.)
+key https://repo.charm.sh/apt/gpg.key
+deb "https://repo.charm.sh/apt/ * *"
+
+# Golang (latest stable)
+ppa ppa:longsleep/golang-backports
+
+# --- Packages ---
+
+# Core
+apt build-essential
 apt curl
-apt wget
-apt jq
-apt tmux
-apt vim
-apt zsh
+apt git
 apt make
+apt tmux
 apt tree
 apt unzip
+apt vim
+apt wget
+apt zsh
 
-# Dev tools
-apt build-essential
+# Shell / terminal
+apt btop
+apt direnv
+apt glow
+apt keychain
+
+# Dev
+apt gh
+apt golang-go
+apt jq
+apt nodejs
 apt python3
 apt python3-pip
+apt software-properties-common

@@ -1,17 +1,48 @@
 # Yumfile — RHEL/CentOS/Fedora packages
-# Apply with: yum install $(grep -v '^#' packages/Yumfile | grep -v '^$')
+# Apply with: yum-bundle packages/Yumfile
+# See: https://yum-bundle.org
 
-git
-curl
-wget
-jq
-tmux
-vim
-zsh
-make
-tree
-unzip
-python3
-python3-pip
-gcc
-gcc-c++
+# --- Keys and repos (processed before packages) ---
+
+# EPEL (Extra Packages for Enterprise Linux)
+# Provides: btop, direnv, jq, keychain, tmux
+epel
+
+# GitHub CLI
+repo https://cli.github.com/packages/rpm/gh-cli.repo
+
+# Charm (glow)
+key https://repo.charm.sh/yum/gpg.key
+repo https://repo.charm.sh/yum/
+
+# Node.js (LTS stream via DNF module)
+module nodejs:20
+
+# --- Packages ---
+
+# Core
+yum curl
+yum git
+yum make
+yum tmux
+yum tree
+yum unzip
+yum vim
+yum wget
+yum zsh
+
+# Shell / terminal
+yum btop
+yum direnv
+yum glow
+yum keychain
+
+# Dev
+yum gh
+yum golang
+yum jq
+yum nodejs
+yum python3
+yum python3-pip
+yum gcc
+yum gcc-c++
