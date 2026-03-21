@@ -1,1 +1,4 @@
 secrets.bash
+.claude/settings.local.json
+.local/
+.settings/

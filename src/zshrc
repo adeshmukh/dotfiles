@@ -34,7 +34,7 @@ autoload -Uz compinit && compinit
 
 # --- Prompt ---
 # Uses __git_ps1 from git-prompt.sh (sourced above via shellrc.d)
-PS1='%F{yellow}$(__git_ps1 " %s ")%f%F{red} %T %f%F{blue} %m %f%F{white} %~ %f%% '
+# PS1='%F{yellow}$(__git_ps1 " %s ")%f%F{red} %T %f%F{blue} %m %f%F{white} %~ %f%% '
 
 # Set terminal title to user@host: cwd
 precmd() { print -Pn "\e]0;%n@%m: %~\a" }
