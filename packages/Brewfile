@@ -1,6 +1,10 @@
 # Brewfile — macOS packages
 # Apply with: brew bundle --file=packages/Brewfile
 
+# Shell / terminal
+brew "zsh-autosuggestions"
+brew "zsh-syntax-highlighting"
+
 # Core tools
 brew "git"
 brew "curl"

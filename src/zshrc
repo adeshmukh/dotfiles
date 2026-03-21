@@ -22,7 +22,7 @@ setopt HIST_IGNORE_DUPS     # don't record duplicate commands
 setopt HIST_IGNORE_SPACE    # don't record commands starting with a space
 setopt SHARE_HISTORY        # share history across sessions
 setopt CORRECT              # suggest corrections for mistyped commands
-setopt PROMPT_SUBST         # enable parameter expansion in PS1 (required for __git_ps1)
+setopt PROMPT_SUBST         # enable parameter expansion in PS1
 
 HISTSIZE=100000
 SAVEHIST=100000
@@ -32,11 +32,44 @@ HISTFILE="${HOME}/.zsh_history"
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 autoload -Uz compinit && compinit
 
-# --- Prompt ---
-# Uses __git_ps1 from git-prompt.sh (sourced above via shellrc.d)
-# PS1='%F{yellow}$(__git_ps1 " %s ")%f%F{red} %T %f%F{blue} %m %f%F{white} %~ %f%% '
+# --- Prompt (native vcs_info — no external dependencies) ---
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:git:*' formats ' %b '
 
-# Set terminal title to user@host: cwd
-precmd() { print -Pn "\e]0;%n@%m: %~\a" }
+_prompt_precmd() {
+    vcs_info
+    print -Pn "\e]0;%n@%m: %~\a"   # terminal title
+}
+precmd_functions+=(_prompt_precmd)
+
+PS1='%F{yellow}${vcs_info_msg_0_}%f%F{red} %T %f%F{blue} %m %f%F{white} %~ %f%% '
+
+# --- Plugins ---
+# Sources plugins installed by package manager or `make plugins`.
+# Missing paths are silently skipped — no errors if a plugin isn't installed.
+_source_plugin() {
+    local name="$1"; shift
+    for path in "$@"; do
+        if [ -f "$path" ]; then
+            source "$path"
+            return
+        fi
+    done
+}
+
+# zsh-autosuggestions: fish-style inline suggestions
+_source_plugin zsh-autosuggestions \
+    /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh \
+    /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh \
+    "${HOME}/.local/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
+
+# zsh-syntax-highlighting: colour commands as you type (load last)
+_source_plugin zsh-syntax-highlighting \
+    /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh \
+    /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh \
+    "${HOME}/.local/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+
+unset -f _source_plugin
 
 alias tabulate='column -t -s "#"'

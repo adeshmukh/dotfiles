@@ -34,6 +34,8 @@ apt btop
 apt direnv
 apt glow
 apt keychain
+apt zsh-autosuggestions
+apt zsh-syntax-highlighting
 
 # Dev
 apt gh

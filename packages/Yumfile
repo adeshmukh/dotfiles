@@ -36,6 +36,8 @@ yum btop
 yum direnv
 yum glow
 yum keychain
+yum zsh-autosuggestions
+yum zsh-syntax-highlighting
 
 # Dev
 yum gh
