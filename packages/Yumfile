@@ -32,10 +32,14 @@ yum wget
 yum zsh
 
 # Shell / terminal
+# bat: cat with syntax highlighting (binary: bat)
+yum bat
 yum btop
 yum direnv
 yum glow
 yum keychain
+# ripgrep: fast grep alternative (binary: rg)
+yum ripgrep
 yum zsh-autosuggestions
 yum zsh-syntax-highlighting
 

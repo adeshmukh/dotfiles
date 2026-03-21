@@ -2,12 +2,22 @@
 # Apply with: brew bundle --file=packages/Brewfile
 
 # Shell / terminal
+# bat: cat with syntax highlighting (binary: bat)
+brew "bat"
+brew "btop"
+brew "direnv"
+brew "glow"
+brew "keychain"
+# ripgrep: fast grep alternative (binary: rg)
+brew "ripgrep"
 brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
 
 # Core tools
 brew "git"
 brew "curl"
+brew "make"
+brew "unzip"
 brew "wget"
 brew "jq"
 brew "tmux"
@@ -15,6 +25,7 @@ brew "vim"
 brew "tree"
 
 # Dev tools
+brew "gh"
 brew "python"
 brew "nvm"
 brew "pyenv"
