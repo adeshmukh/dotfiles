@@ -1,0 +1,20 @@
+# Aptfile — Debian/Ubuntu packages
+# Apply with: apt-bundle Aptfile
+# See: https://apt-bundle.org/aptfile-format.html
+
+# Core tools
+apt git
+apt curl
+apt wget
+apt jq
+apt tmux
+apt vim
+apt zsh
+apt make
+apt tree
+apt unzip
+
+# Dev tools
+apt build-essential
+apt python3
+apt python3-pip

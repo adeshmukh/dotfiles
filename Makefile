@@ -1,7 +1,7 @@
 REPO_DIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 SRC_DIR  := $(REPO_DIR)/src
 
-.PHONY: help install sync
+.PHONY: help install packages sync
 .DEFAULT_GOAL := help
 
 ## help: Show this help message
@@ -25,6 +25,21 @@ install:
 	@ln -sfv "$(SRC_DIR)/claude/settings.json" "$(HOME)/.claude/settings.json"
 	@echo ""
 	@echo "Done. Open a new shell or run: source ~/.zshrc"
+
+## packages: Install system packages for the current platform
+packages:
+	@case "$$(uname -s)" in \
+	  Darwin) echo "==> Installing Homebrew packages" && brew bundle --file="$(REPO_DIR)/packages/Brewfile" ;; \
+	  Linux)  \
+	    if [ -f /etc/debian_version ]; then \
+	      echo "==> Installing apt packages via apt-bundle" && apt-bundle "$(REPO_DIR)/packages/Aptfile"; \
+	    elif [ -f /etc/redhat-release ]; then \
+	      echo "==> Installing yum packages" && xargs yum install -y < "$(REPO_DIR)/packages/Yumfile"; \
+	    else \
+	      echo "Unsupported Linux distro"; exit 1; \
+	    fi ;; \
+	  *) echo "Unsupported platform: $$(uname -s)"; exit 1 ;; \
+	esac
 
 ## sync: Pull latest changes from remote (rebase)
 sync:

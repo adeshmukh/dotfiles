@@ -1,0 +1,21 @@
+# Brewfile — macOS packages
+# Apply with: brew bundle --file=packages/Brewfile
+
+# Core tools
+brew "git"
+brew "curl"
+brew "wget"
+brew "jq"
+brew "tmux"
+brew "vim"
+brew "tree"
+
+# Dev tools
+brew "python"
+brew "nvm"
+brew "pyenv"
+brew "go"
+
+# Cloud
+brew "awscli"
+brew "google-cloud-sdk"

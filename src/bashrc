@@ -3,11 +3,18 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-# Source all *.sh files from ~/.shellrc.d
-if [ -d "${HOME}/.shellrc.d" ]; then
-    for f in $(find "${HOME}/.shellrc.d/" -maxdepth 1 -type f -name '*.sh' | sort); do
+# Source all *.sh files from a directory (silently skips missing dirs)
+_source_dir() {
+    local dir="$1"
+    [ -d "$dir" ] || return
+    for f in $(find "$dir" -maxdepth 1 -type f -name '*.sh' | sort); do
         # shellcheck source=/dev/null
-        source "${f}"
+        source "$f"
     done
-    unset f
-fi
+}
+
+# 3-tier load: base → platform → host
+_source_dir "${HOME}/.shellrc.d"
+_source_dir "${HOME}/.shellrc.d/platform/$(uname -s | tr '[:upper:]' '[:lower:]')"
+_source_dir "${HOME}/.shellrc.d/host/$(hostname -s)"
+unset _source_dir

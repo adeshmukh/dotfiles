@@ -1,0 +1,17 @@
+# Yumfile — RHEL/CentOS/Fedora packages
+# Apply with: yum install $(grep -v '^#' packages/Yumfile | grep -v '^$')
+
+git
+curl
+wget
+jq
+tmux
+vim
+zsh
+make
+tree
+unzip
+python3
+python3-pip
+gcc
+gcc-c++
