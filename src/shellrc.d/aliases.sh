@@ -2,9 +2,11 @@ alias g=git
 alias ga='git add'
 alias gl='git pull'
 alias gp='git push'
+
+alias l='ls -l'
+alias l1='ls -1'
+alias lA='ls -Al'
+alias la='ls -al'
 alias ll='ls -l'
-alias lla='ls -Al'
-alias ll1='ls -1'
-alias llad='ls -Ald'
-alias llhiddenhere='ls -Ald ./.*'
+alias lAd='ls -Ald'
 

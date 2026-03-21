@@ -3,4 +3,3 @@
 
 export PATH="${HOME}/.local/bin:${HOME}/devel/bin:${PATH}"
 
-export CDPATH="${HOME}/devel:${HOME}/devel/repo:${HOME}/devel/repo/bitbucket.org/adeshmukh"
