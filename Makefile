@@ -3,7 +3,7 @@ SRC_DIR  := $(REPO_DIR)/src
 
 PLUGINS_DIR := $(HOME)/.local/share/zsh/plugins
 
-.PHONY: help install packages plugins sync
+.PHONY: help install packages plugins sync claude-skills
 .DEFAULT_GOAL := help
 
 ## help: Show this help message
@@ -28,6 +28,7 @@ install:
 	@ln -sfv "$(SRC_DIR)/claude/statusline-command.sh" "$(HOME)/.claude/statusline-command.sh"
 	@chmod +x "$(SRC_DIR)/claude/statusline-command.sh"
 	@ln -sfv "$(SRC_DIR)/claude/CLAUDE.md" "$(HOME)/.claude/CLAUDE.md"
+	@ln -sfv "$(SRC_DIR)/claude/marketplace.json" "$(HOME)/.claude/marketplace.json"
 	@echo ""
 	@echo "Done. Open a new shell or run: source ~/.zshrc"
 	@echo "Tip: to install system packages for this platform, run: make packages"
@@ -61,6 +62,18 @@ plugins:
 	    echo "==> $$name already present, skipping"; \
 	  fi; \
 	done
+
+## claude-skills: Print slash commands to register marketplace and install all skills
+claude-skills:
+	@echo "==> Run these slash commands inside Claude Code:"
+	@echo ""
+	@MARKETPLACE=$$(node -e "process.stdout.write(require('$(HOME)/.claude/marketplace.json').name)"); \
+	 echo "  /plugin marketplace add $(HOME)/.claude/marketplace.json"; \
+	 node -e " \
+	   const m = require('$(HOME)/.claude/marketplace.json'); \
+	   m.plugins.forEach(p => console.log('  /plugin install ' + p.name + '@' + m.name)); \
+	 "
+	@echo ""
 
 ## sync: Pull latest changes from remote (rebase)
 sync:

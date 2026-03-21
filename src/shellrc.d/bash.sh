@@ -9,8 +9,6 @@ export GREP_OPTIONS='--color=auto'
 export PS1='\[\033[6;37;43m\]$(__git_ps1 " %s ")\[\033[9;31;41m\] \t \[\033[0;44m\] \h \[\033[8;34;47m\] \w \[\033[0m\]\n\$ '
 export PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"'
 
-alias tabulate='column -t -s "#"'
-
 # sbp: source a shellrc.d snippet by name (with tab completion)
 function sbp() {
   source ~/.shellrc.d/${1}.sh 2>/dev/null

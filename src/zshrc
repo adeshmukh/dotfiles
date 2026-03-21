@@ -73,4 +73,3 @@ _source_plugin zsh-syntax-highlighting \
 
 unset -f _source_plugin
 
-alias tabulate='column -t -s "#"'
