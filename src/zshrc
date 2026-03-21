@@ -1,0 +1,35 @@
+# ~/.zshrc: sourced for interactive zsh sessions.
+
+# Source all *.sh files from ~/.shellrc.d (shared with bash; bash-only files self-guard)
+if [ -d "${HOME}/.shellrc.d" ]; then
+    for f in $(find "${HOME}/.shellrc.d/" -maxdepth 1 -type f -name '*.sh' | sort); do
+        # shellcheck source=/dev/null
+        source "${f}"
+    done
+    unset f
+fi
+
+# --- Zsh-specific options ---
+setopt AUTO_CD              # cd by typing directory name alone
+setopt HIST_IGNORE_DUPS     # don't record duplicate commands
+setopt HIST_IGNORE_SPACE    # don't record commands starting with a space
+setopt SHARE_HISTORY        # share history across sessions
+setopt CORRECT              # suggest corrections for mistyped commands
+setopt PROMPT_SUBST         # enable parameter expansion in PS1 (required for __git_ps1)
+
+HISTSIZE=100000
+SAVEHIST=100000
+HISTFILE="${HOME}/.zsh_history"
+
+# Case-insensitive tab completion
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+autoload -Uz compinit && compinit
+
+# --- Prompt ---
+# Uses __git_ps1 from git-prompt.sh (sourced above via shellrc.d)
+PS1='%F{yellow}$(__git_ps1 " %s ")%f%F{red} %T %f%F{blue} %m %f%F{white} %~ %f%% '
+
+# Set terminal title to user@host: cwd
+precmd() { print -Pn "\e]0;%n@%m: %~\a" }
+
+alias tabulate='column -t -s "#"'

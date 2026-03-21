@@ -1,0 +1,13 @@
+# ~/.bashrc: sourced for interactive bash sessions.
+
+# If not running interactively, don't do anything
+[ -z "$PS1" ] && return
+
+# Source all *.sh files from ~/.shellrc.d
+if [ -d "${HOME}/.shellrc.d" ]; then
+    for f in $(find "${HOME}/.shellrc.d/" -maxdepth 1 -type f -name '*.sh' | sort); do
+        # shellcheck source=/dev/null
+        source "${f}"
+    done
+    unset f
+fi

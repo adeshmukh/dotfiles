@@ -1,0 +1,40 @@
+# ~/.gitignore_global: patterns ignored in every repo.
+
+# OS artifacts
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Editor artifacts
+*.swp
+*.swo
+*~
+.idea/
+*.iml
+.vscode/
+.project
+.classpath
+.settings/
+*.sublime-workspace
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+
+# Build / dependency dirs commonly left out of project .gitignore
+node_modules/
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+target/

@@ -1,35 +1,31 @@
-BASHRC_D=$(HOME)/.bashrc.d
-BASHFILE=$(HOME)/.bashrc
-SRCDIR=$(PWD)/src
+REPO_DIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
+SRC_DIR  := $(REPO_DIR)/src
 
+.PHONY: help install sync
+.DEFAULT_GOAL := help
 
-# --- .bashrc.d
-.bashrcd_makedir:
-	mkdir -p $(BASHRC_D)
+## help: Show this help message
+help:
+	@echo "Usage: make <target>"
+	@echo ""
+	@grep -E '^## [a-zA-Z_-]+:' $(MAKEFILE_LIST) \
+		| awk 'BEGIN {FS = ":"}; {printf "  %-12s %s\n", substr($$1, 4), $$2}'
 
-.bashrcd_ln:
-	ln -Fis $(SRCDIR)/bashrc.d $(BASHRC_D)
+## install: Symlink dotfiles into HOME (safe to re-run)
+install:
+	@echo "==> Symlinking dotfiles to $(HOME)"
+	@for f in $$(find "$(SRC_DIR)" -maxdepth 1 -type f); do \
+		target="$(HOME)/.$$(basename $$f)"; \
+		ln -sfv "$$f" "$$target"; \
+	done
+	@echo "==> Symlinking shellrc.d"
+	@ln -sfnv "$(SRC_DIR)/shellrc.d" "$(HOME)/.shellrc.d"
+	@echo "==> Symlinking claude/settings.json"
+	@mkdir -p "$(HOME)/.claude"
+	@ln -sfv "$(SRC_DIR)/claude/settings.json" "$(HOME)/.claude/settings.json"
+	@echo ""
+	@echo "Done. Open a new shell or run: source ~/.zshrc"
 
-.bashrcd_cp:
-	cp -rf $(SRCDIR)/bashrc.d/* $(BASHRC_D)
-
-.bashrcd_hooks:
-	echo 'if [ -z "$$PS1" ]; then return; else for f in $$(find $(BASHRC_D)/ -type f -name '*.bash'); do source $${f}; done; unset f; fi # dotfiles-installer' >> $(BASHFILE)
-
-.bashrcd_link: .bashrcd_makedir .bashrcd_ln .bashrcd_hooks
-
-.bashrcd_copy: .bashrcd_makedir .bashrcd_cp .bashrcd_hooks
-
-
-# --- dotfiles
-.dotfiles_link:
-	for f in $$(find $(SRCDIR) -maxdepth 1 -type f); do ln -Fis $${f} $${HOME}/.$$(basename $${f}); done
-	
-.dotfiles_copy:
-	for f in $$(find $(SRCDIR) -maxdepth 1 -type f); do cp -vf $${f} $${HOME}/.$$(basename $${f}); done
-
-# --- Main goals
-install: .bashrcd_link .dotfiles_link
-
-install_copy: .bashrcd_copy .dotfiles_copy
-
+## sync: Pull latest changes from remote (rebase)
+sync:
+	@git -C "$(REPO_DIR)" pull --rebase

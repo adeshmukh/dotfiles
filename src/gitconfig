@@ -27,6 +27,8 @@
     axe = branch -d
     pushforg = push --force origin
     ciane = commit --amend --no-edit
+[core]
+    excludesfile = ~/.gitignore_global
 [commit]
     gpgsign = false
 [user]

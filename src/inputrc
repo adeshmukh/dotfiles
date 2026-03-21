@@ -1,0 +1,29 @@
+# ~/.inputrc: readline configuration (bash, python REPL, etc.)
+
+# Case-insensitive completion
+set completion-ignore-case on
+
+# Treat hyphens and underscores as equivalent during completion
+set completion-map-case on
+
+# Show all completions on first Tab press (skip double-Tab)
+set show-all-if-ambiguous on
+
+# Append slash to completed directory names
+set mark-directories on
+set mark-symlinked-directories on
+
+# Colored completion based on file type (like ls --color)
+set colored-stats on
+set colored-completion-prefix on
+
+# Don't ring the bell on completion
+set bell-style none
+
+# History search with arrow keys: narrow by already-typed prefix
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+
+# Ctrl-left / Ctrl-right: move by word
+"\e[1;5C": forward-word
+"\e[1;5D": backward-word

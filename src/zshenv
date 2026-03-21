@@ -1,0 +1,4 @@
+# ~/.zshenv: sourced for every zsh instance (login, interactive, scripts).
+# Keep this minimal — only environment variables that must be present everywhere.
+
+export PATH="${HOME}/devel/bin:${PATH}"
