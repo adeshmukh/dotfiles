@@ -27,6 +27,7 @@ install:
 	@chmod +x "$(SRC_DIR)/claude/statusline-command.sh"
 	@echo ""
 	@echo "Done. Open a new shell or run: source ~/.zshrc"
+	@echo "Tip: to install system packages for this platform, run: make packages"
 
 ## packages: Install system packages for the current platform
 packages:
