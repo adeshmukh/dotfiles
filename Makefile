@@ -27,6 +27,7 @@ install:
 	@ln -sfv "$(SRC_DIR)/claude/settings.json" "$(HOME)/.claude/settings.json"
 	@ln -sfv "$(SRC_DIR)/claude/statusline-command.sh" "$(HOME)/.claude/statusline-command.sh"
 	@chmod +x "$(SRC_DIR)/claude/statusline-command.sh"
+	@ln -sfv "$(SRC_DIR)/claude/CLAUDE.md" "$(HOME)/.claude/CLAUDE.md"
 	@echo ""
 	@echo "Done. Open a new shell or run: source ~/.zshrc"
 	@echo "Tip: to install system packages for this platform, run: make packages"

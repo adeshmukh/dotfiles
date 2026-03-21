@@ -1,4 +1,6 @@
 # ~/.zshenv: sourced for every zsh instance (login, interactive, scripts).
 # Keep this minimal — only environment variables that must be present everywhere.
 
-export PATH="${HOME}/devel/bin:${PATH}"
+export PATH="${HOME}/.local/bin:${HOME}/devel/bin:${PATH}"
+
+export CDPATH="${HOME}/devel:${HOME}/devel/repo:${HOME}/devel/repo/bitbucket.org/adeshmukh"
